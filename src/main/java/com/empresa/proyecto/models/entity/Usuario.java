@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -51,13 +52,15 @@ public class Usuario implements Serializable{
 					inverseJoinColumns = @JoinColumn(name="role_id")) //estyo solo si quiueremos cambiar el name
 	private List<Role> roles;
 
+	//@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	//private Perfil perfil;
 	
 	
 	public Usuario() {
 	}
 
 	public Long getId() {
-		return id;
+		return id; 
 	}
 
 	public void setId(Long id) {
@@ -67,7 +70,7 @@ public class Usuario implements Serializable{
 	public String getUsername() {
 		return username;
 	}
-
+ 
 	public void setUsername(String username) {
 		this.username = username;
 	}

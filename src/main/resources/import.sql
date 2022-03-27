@@ -13,5 +13,34 @@ insert into usuario_roles (usuario_id,role_id) values (2,2);
 insert into usuario_roles (usuario_id,role_id) values (2,1);  
 insert into usuario_roles (usuario_id,role_id) values (3,1);  
 
+insert into sexo(sexo) values ('hombre'); 
+insert into sexo(sexo) values ('mujer');
+
+insert into c_subscripcion(tipo_subscripcion,precio) values ('mensual',300);
+insert into c_subscripcion(tipo_subscripcion,precio) values ('anual',3000);
+insert into c_subscripcion(tipo_subscripcion,precio) values ('semanal',100);
+
+insert into subscripcion(active,tipo_id) values (true,1); 
+
+insert into perfil(sexo_id,usuario_id,foto,edad,peso,altura,subscripcion_id) values (1,1,'',21,57.0,1.75,1); 
 
 
+insert into c_dias(dia) values ("lunes"); 
+insert into c_dias(dia) values ("martes"); 
+insert into c_dias(dia) values ("miercoles"); 
+insert into c_dias(dia) values ("jueves");
+insert into c_dias(dia) values ("viernes");
+insert into c_dias(dia) values ("sabado");
+insert into c_dias(dia) values ("domingo");
+    
+insert into rutinas(dia_id,perfil_id) values (1,1); 
+insert into rutinas(dia_id,perfil_id) values (2,1); 
+insert into rutinas(dia_id,perfil_id) values (3.1); 
+
+insert into ejercicios(nombre,musculo) values ("Press de banca","pecho"); 
+insert into ejercicios(nombre,musculo) values ("Mancuerna","brazo"); 
+insert into ejercicios(nombre,musculo) values ("Peso muerto","pierna"); 
+insert into ejercicios(nombre,musculo) values ("Sentadilla","pierna"); 
+
+insert into rutina_ejercicios(rutina_id, ejercicio_id) values (1,1); 
+insert into rutina_ejercicios(rutina_id, ejercicio_id) values (1,2); 

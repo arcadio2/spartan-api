@@ -2,6 +2,8 @@ package com.empresa.proyecto.auth;
 
 
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -63,7 +65,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-		//tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken,accesTokenConverter()));
+		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken,accesTokenConverter()));
 		
 		endpoints.authenticationManager(authenticationManager)
 		//.tokenStore(tokenStore())

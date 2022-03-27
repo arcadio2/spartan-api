@@ -9,32 +9,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-@Entity
-@Table(name = "roles")
-public class Role implements Serializable{
+@Entity //planes
+@Table(name = "c_subscripcion")
+public class CatalogoSubscricion  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true,length = 20)
-	private String nombre; 
+	@Column(name = "tipo_subscripcion")
+	private String tipoSubscripcion; 
+	
+	private Double precio;
 	
 	
-	public Role(Long id, String nombre) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-	}
- 
-
-	public Role() {
-	}
-
-
+	
 	public Long getId() {
 		return id;
 	}
+
 
 
 	public void setId(Long id) {
@@ -42,19 +34,31 @@ public class Role implements Serializable{
 	}
 
 
-	public String getNombre() {
-		return nombre;
+
+	public String getTipoSubscripcion() {
+		return tipoSubscripcion;
 	}
 
 
 
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setTipoSubscripcion(String tipoSubscripcion) {
+		this.tipoSubscripcion = tipoSubscripcion;
 	}
 
+
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
 
 
 
 	private static final long serialVersionUID = 1L;
+
 }
