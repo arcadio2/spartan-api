@@ -39,10 +39,13 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioDao.findByUsername(username);
-		
+		System.out.println("XDDD "+ usuario);
 		if(usuario == null) {
 			usuario = usuarioDao.finByEmail(username); 
-			throw new UsernameNotFoundException("No existe el usuario");
+			if(usuario == null) {
+				throw new UsernameNotFoundException("No existe el usuario");
+			}
+			
 		}
 		
 		List<GrantedAuthority> authorities = usuario.getRoles().

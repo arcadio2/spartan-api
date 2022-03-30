@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,6 +41,7 @@ public class UsuarioController {
 	
 	@PostMapping("/user/create")
 	@ResponseStatus(HttpStatus.CREATED)//201
+	//@Secured({})
 	public ResponseEntity<?> createUser(@RequestBody @Valid Usuario usuario, BindingResult result){
 		
 		Map<String, Object> response = new HashMap<>();
@@ -63,31 +65,31 @@ public class UsuarioController {
 				response.put("mensaje","Ocurrió un error al guardar, datos invalidos");
 				response.put("errors", errors);
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
-			}
+			} 
 			if(usuarioService.existeUsuarioByEmail(usuario.getEmail()) ) {
-				response.put("mensaje", "El email ya existe");
+				response.put("mensaje", "El email ya está registrado");
 				response.put("error","Email inválido");
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 			}else if(usuarioService.existeUsuarioByUsername(usuario.getUsername())) {
 				response.put("mensaje", "El usuario ya está en uso");
 				response.put("error","Username inváldo");
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			}  
 			
 			try {
- 
+   
 				List<Role> roles =  Arrays.asList(usuarioService.getRoleByName("ROLE_USER")); 
 				   
 				//roles.add(role);
-	 
+	
 				 
 				usuario.setRoles(roles); 
 				usuario.setEnabled(true);
 				usuario.setPassword( passwordEncoder.encode( usuario.getPassword() )); 
 				Usuario nuevoUsuario = usuarioService.save(usuario); 
 				
-				response.put("mensaje", "El cliente ha sido creado con éxito");
-				response.put("cliente",nuevoUsuario); 
+				response.put("mensaje", "El usuario ha sido creado con éxito");
+				response.put("usuario",nuevoUsuario); 
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 			}catch(Exception e) {
 				response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause()); 

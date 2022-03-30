@@ -16,6 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 
 
@@ -30,19 +34,26 @@ public class Usuario implements Serializable{
 	private Long id;
 	
 	@Column(unique = true,length = 20)
+	@NotNull
+	@Length(min = 3,message = "El nombre de usuario debe tener 3 caracteres")
 	private String username; 
 	
 	@Column(length = 60)
+	@NotNull
 	private String password; 
 	private boolean enabled; 
 	
+	@NotNull
+	@Length(min = 3,message = "El nombre debe tener 3 caracteres")
 	private String nombre; 	
+	@NotNull
 	private String apellido;
 	
 	@Column(unique = true) 
+	@Email(message = "El email es inválido")
 	private String email;
-	
-	
+	 
+	  
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) //crea tabla intermedia usuario_roles
 	
 	@JoinTable(name = "usuario_roles", 
