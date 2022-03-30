@@ -13,8 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.empresa.proyecto.models.dao.IPerfilDao;
 import com.empresa.proyecto.models.dao.IUsuarioDao;
 import com.empresa.proyecto.models.dao.RolDao;
+import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
 import com.empresa.proyecto.models.entity.Usuario;
 
@@ -24,7 +26,8 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	
 	@Autowired
 	private IUsuarioDao usuarioDao;
-	
+	@Autowired
+	private IPerfilDao perfilDao; 
 	
 	
 	@Autowired
@@ -108,5 +111,26 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 			return true; 
 		}
 		return false;
+	}
+
+
+	@Override
+	public Perfil getProfileByUsername(String username) {
+		
+		return perfilDao.getPerfilByUsername(username);
+	}
+
+
+	@Override
+	public Perfil getProfileById(Long id) {
+		// TODO Auto-generated method stub
+		return perfilDao.findById(id).orElse(null);
+	}
+
+
+	@Override
+	public Perfil save(Perfil perfil) {
+		// TODO Auto-generated method stub
+		return perfilDao.save(perfil);
 	}
 }

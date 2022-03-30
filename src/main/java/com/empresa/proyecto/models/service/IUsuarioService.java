@@ -2,6 +2,7 @@ package com.empresa.proyecto.models.service;
 
 import java.util.List;
 
+import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
 import com.empresa.proyecto.models.entity.Usuario;
 
@@ -16,4 +17,8 @@ public interface IUsuarioService {
 	public boolean existeUsuarioByUsername(String username);
 	
 	public boolean existeUsuarioByEmail(String email);
+	
+	public Perfil getProfileByUsername(String username);
+	public Perfil getProfileById(Long id);
+	public Perfil save(Perfil perfil); 
 }

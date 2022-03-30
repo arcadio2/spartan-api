@@ -30,6 +30,7 @@ public class Perfil implements Serializable{
 	@OneToOne
 	private Usuario usuario; 
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private Sexo sexo; 
 	
