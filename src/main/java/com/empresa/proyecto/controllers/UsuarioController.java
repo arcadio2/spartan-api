@@ -121,6 +121,26 @@ public class UsuarioController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
 	}
 	
+	@PostMapping("/user/profile")
+	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	public ResponseEntity<?> createPerfil(@RequestBody Perfil perfil){
+		Map<String, Object> response = new HashMap<>();
+		Perfil perfilCreado = null; 
+		try {
+			perfilCreado = usuarioService.save(perfilCreado); 
+			
+		}catch(Exception e) {
+			response.put("error", "No se ha podido creat el perfil"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.BAD_REQUEST); 	
+		}
+		
+		
+		response.put("mensaje", "El perfil ha sido actualizado con éxito"); 
+		response.put("perfil", perfilCreado); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
+	}
+	
 	
 	
 	@GetMapping("/hola")

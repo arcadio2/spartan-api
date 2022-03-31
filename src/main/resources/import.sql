@@ -7,6 +7,7 @@ INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('
 
 INSERT INTO roles (nombre) values ('ROLE_USER');
 INSERT INTO roles (nombre) values ('ROLE_ADMIN');
+INSERT INTO roles (nombre) values ('ROLE_INSTRUCTOR');
 
 insert into usuario_roles (usuario_id,role_id) values (1,1); 
 insert into usuario_roles (usuario_id,role_id) values (2,2);
