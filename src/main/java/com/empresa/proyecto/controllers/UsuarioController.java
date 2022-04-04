@@ -1,5 +1,8 @@
 package com.empresa.proyecto.controllers;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +15,8 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -27,9 +32,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.proyecto.models.entity.Usuario;
+
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
 import com.empresa.proyecto.models.service.IUsuarioService;
+import com.empresa.proyecto.services.IFileService;
 
 @RestController
 @RequestMapping("/api")
@@ -38,6 +45,9 @@ public class UsuarioController {
 
 	@Autowired
 	IUsuarioService usuarioService; 
+	@Autowired
+	IFileService fileService; 
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -125,12 +135,24 @@ public class UsuarioController {
 	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
 	public ResponseEntity<?> createPerfil(@RequestBody Perfil perfil){
 		Map<String, Object> response = new HashMap<>();
+		System.out.println("ENTRAAAAAAAAA");
+		
 		Perfil perfilCreado = null; 
+	   
+		/*Obtenemos el usuario*/
+		Usuario usuario = usuarioService.findByUsername(perfil.getUsuario().getUsername()); 
+		perfil.setUsuario(usuario);
+		perfil.setSexo(usuarioService.getSexoById(perfil.getSexo().getId())); 
+		perfil.setFoto("no_user.png");
+		System.out.println(perfil.getSexo().getId());
 		try {
-			perfilCreado = usuarioService.save(perfilCreado); 
+			perfilCreado = usuarioService.saveProfile(perfil); 
+			
 			
 		}catch(Exception e) {
-			response.put("error", "No se ha podido creat el perfil"); 
+			response.put("error", "No se ha podido crear el perfil"); 
+			System.out.println(e.getMessage());
+			System.out.println(e.getLocalizedMessage());
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.BAD_REQUEST); 	
 		}
 		
@@ -154,6 +176,26 @@ public class UsuarioController {
 		return milista; 
 	}
 	
+	
+	
+	/*IMAGEN DE PERFIL*/
+	@GetMapping("/usuarios/uploads/img/{nombreFoto:.+}")
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
+		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
+		Resource recurso = null; 
+		try {
+			recurso = fileService.cargar(nombreFoto); 
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} 
+ 
+		/*Para que se pueda descargar el recurso*/
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\" "+recurso.getFilename()+"\" ");
+		
+		return new ResponseEntity<Resource>(recurso,cabecera,HttpStatus.OK);
+	}
+
 	
 	
 }

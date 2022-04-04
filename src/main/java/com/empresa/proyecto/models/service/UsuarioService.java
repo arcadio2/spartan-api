@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.empresa.proyecto.models.dao.IPerfilDao;
+import com.empresa.proyecto.models.dao.ISexoDao;
 import com.empresa.proyecto.models.dao.IUsuarioDao;
 import com.empresa.proyecto.models.dao.RolDao;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
+import com.empresa.proyecto.models.entity.Sexo;
 import com.empresa.proyecto.models.entity.Usuario;
 
 
@@ -28,6 +30,8 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	private IUsuarioDao usuarioDao;
 	@Autowired
 	private IPerfilDao perfilDao; 
+	@Autowired
+	private ISexoDao sexoDao; 
 	
 	
 	@Autowired
@@ -129,8 +133,15 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 
 
 	@Override
-	public Perfil save(Perfil perfil) {
+	public Perfil saveProfile(Perfil perfil) {
 		// TODO Auto-generated method stub
 		return perfilDao.save(perfil);
+	}
+
+
+	@Override
+	public Sexo getSexoById(Long id) {
+		// TODO Auto-generated method stub
+		return sexoDao.findById(id).orElse(null);
 	}
 }

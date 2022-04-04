@@ -132,5 +132,15 @@ public class Usuario implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email; 
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	} 
+	
+	
 }
+
+

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
+import com.empresa.proyecto.models.entity.Sexo;
 import com.empresa.proyecto.models.entity.Usuario;
 
 public interface IUsuarioService {
@@ -20,5 +21,7 @@ public interface IUsuarioService {
 	
 	public Perfil getProfileByUsername(String username);
 	public Perfil getProfileById(Long id);
-	public Perfil save(Perfil perfil); 
+	public Perfil saveProfile(Perfil perfil); 
+	
+	public Sexo getSexoById(Long id); 
 }
