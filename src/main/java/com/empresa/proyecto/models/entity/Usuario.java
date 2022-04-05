@@ -33,8 +33,8 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true,length = 20)
-	@NotNull
+	@Column(unique = true,length = 20) 
+	@NotNull 
 	@Length(min = 3,message = "El nombre de usuario debe tener 3 caracteres")
 	private String username; 
 	

@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -35,6 +37,7 @@ import com.empresa.proyecto.models.entity.Usuario;
 
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
+import com.empresa.proyecto.models.entity.Subscripcion;
 import com.empresa.proyecto.models.service.IUsuarioService;
 import com.empresa.proyecto.services.IFileService;
 
@@ -77,7 +80,7 @@ public class UsuarioController {
 				response.put("mensaje","Ocurrió un error al guardar, datos invalidos");
 				response.put("errors", errors);
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
-			} 
+			}  
 			if(usuarioService.existeUsuarioByEmail(usuario.getEmail()) ) {
 				response.put("mensaje", "El email ya está registrado");
 				response.put("error","Email inválido");
@@ -133,9 +136,10 @@ public class UsuarioController {
 	
 	@PostMapping("/user/profile")
 	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> createPerfil(@RequestBody Perfil perfil){
 		Map<String, Object> response = new HashMap<>();
-		System.out.println("ENTRAAAAAAAAA");
+
 		
 		Perfil perfilCreado = null; 
 	   
@@ -143,7 +147,7 @@ public class UsuarioController {
 		Usuario usuario = usuarioService.findByUsername(perfil.getUsuario().getUsername()); 
 		perfil.setUsuario(usuario);
 		perfil.setSexo(usuarioService.getSexoById(perfil.getSexo().getId())); 
-		perfil.setFoto("no_user.png");
+		//perfil.setFoto("no_user.png");
 		System.out.println(perfil.getSexo().getId());
 		try {
 			perfilCreado = usuarioService.saveProfile(perfil); 
@@ -164,6 +168,67 @@ public class UsuarioController {
 	}
 	
 	
+	@PutMapping("/user/profile")
+	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> editPerfil(@RequestBody Perfil perfil){
+		Map<String, Object> response = new HashMap<>();
+
+		Perfil perfilActual = null; 
+		try {
+			String username = perfil.getUsuario().getUsername();
+			perfilActual = usuarioService.getProfileByUsername(username);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+				
+			
+		 
+		
+		
+		if(perfilActual == null) {
+			response.put("error", "No existe el perfil a editar");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.NOT_FOUND); 
+		}
+		
+		Perfil perfilUpdated = null; 
+		try {
+			perfilActual.setAltura(perfil.getAltura());
+			perfilActual.setEdad(perfil.getEdad());
+			perfilActual.setFoto(perfil.getFoto());
+			perfilActual.setPeso(perfil.getPeso());
+			
+			/*GUardar subscripcion*/
+			Subscripcion sub = new Subscripcion();
+			sub.setActive(true); 
+			sub.setTipo(perfil.getSubscripcion().getTipo());
+			
+			Subscripcion nuevaSub= null;
+			try {    
+				nuevaSub = usuarioService.saveSubscripcion(sub); 
+			}catch(Exception e) {  
+				response.put("mensaje", "Ocurrió un error al guardar ");
+				response.put("error", e.getMessage());
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			Date fechFin = nuevaSub.calcularFechaFin(sub.getTipo()); 
+			System.out.println(fechFin.toString());
+			nuevaSub.setFechaFin(fechFin);
+			
+			perfilActual.setSubscripcion(nuevaSub); 
+			
+			perfilUpdated = usuarioService.saveProfile(perfilActual);
+		}catch(Exception e) {
+			response.put("mensaje", "Ocurrió un error al guardar ");
+			response.put("error", e.getMessage());
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		response.put("mensaje", "El perfil ha sido editado con éxito");
+		response.put("perfil",perfilUpdated);
+		
+		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+	}
 	
 	@GetMapping("/hola")
 	public List<String> index() {

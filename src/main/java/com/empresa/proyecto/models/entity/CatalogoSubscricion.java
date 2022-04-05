@@ -21,6 +21,7 @@ public class CatalogoSubscricion  implements Serializable{
 	
 	private Double precio;
 	
+	private Long dias;
 	
 	
 	public Long getId() {
@@ -31,6 +32,19 @@ public class CatalogoSubscricion  implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	
+
+
+	public Long getDias() {
+		return dias;
+	}
+
+
+
+	public void setDias(Long dias) {
+		this.dias = dias;
 	}
 
 

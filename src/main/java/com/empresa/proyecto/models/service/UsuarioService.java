@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.empresa.proyecto.models.dao.IPerfilDao;
 import com.empresa.proyecto.models.dao.ISexoDao;
+import com.empresa.proyecto.models.dao.ISubscripcionDao;
 import com.empresa.proyecto.models.dao.IUsuarioDao;
 import com.empresa.proyecto.models.dao.RolDao;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
 import com.empresa.proyecto.models.entity.Sexo;
+import com.empresa.proyecto.models.entity.Subscripcion;
 import com.empresa.proyecto.models.entity.Usuario;
 
 
@@ -31,7 +33,9 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	@Autowired
 	private IPerfilDao perfilDao; 
 	@Autowired
-	private ISexoDao sexoDao; 
+	private ISexoDao sexoDao;
+	@Autowired
+	private ISubscripcionDao subDao; 
 	
 	
 	@Autowired
@@ -143,5 +147,19 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	public Sexo getSexoById(Long id) {
 		// TODO Auto-generated method stub
 		return sexoDao.findById(id).orElse(null);
+	}
+
+
+	@Override
+	public Subscripcion getSubscripcionById(Long id) {
+		// TODO Auto-generated method stub
+		return subDao.findById(id).orElse(null);
+	}
+
+
+	@Override
+	public Subscripcion saveSubscripcion(Subscripcion sub) {
+		// TODO Auto-generated method stub
+		return subDao.save(sub);
 	}
 }
