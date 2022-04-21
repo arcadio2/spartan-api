@@ -85,14 +85,13 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 
 	@Override
 	public List<Role> getRoles() {
-		// TODO Auto-generated method stub
 		return (List<Role>) roleDao.findAll();
 	}
 
 
 	@Override
 	public Role getRoleByName(String name) {
-		// TODO Auto-generated method stub
+		
 		return roleDao.getRoleByName(name);
 	}
 
@@ -131,35 +130,79 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 
 	@Override
 	public Perfil getProfileById(Long id) {
-		// TODO Auto-generated method stub
+
 		return perfilDao.findById(id).orElse(null);
 	}
 
 
 	@Override
 	public Perfil saveProfile(Perfil perfil) {
-		// TODO Auto-generated method stub
+
 		return perfilDao.save(perfil);
 	}
 
 
 	@Override
 	public Sexo getSexoById(Long id) {
-		// TODO Auto-generated method stub
+
 		return sexoDao.findById(id).orElse(null);
 	}
 
 
 	@Override
 	public Subscripcion getSubscripcionById(Long id) {
-		// TODO Auto-generated method stub
+
 		return subDao.findById(id).orElse(null);
 	}
 
 
 	@Override
 	public Subscripcion saveSubscripcion(Subscripcion sub) {
-		// TODO Auto-generated method stub
+
 		return subDao.save(sub);
+	}
+
+
+	@Override
+	public List<Usuario> getAllUsers() {
+		return (List<Usuario>) usuarioDao.findAll();
+	}
+
+
+	@Override
+	public void deleteUser(Usuario usuario) {
+		usuarioDao.delete(usuario);
+	}
+
+
+	@Override
+	public void deleteProfile(Perfil perfil) {
+		perfilDao.delete(perfil);
+		
+	}
+
+
+	@Override
+	public List<Perfil> getPerfilesByInstructor(String instructor) {
+		return perfilDao.getPerfilesByInstructor(instructor);
+	}
+
+
+	@Override
+	public List<Perfil> getAllProfiles() {
+		return (List<Perfil>) perfilDao.findAll();
+	}
+
+
+	@Override
+	public List<Perfil> getPerfilByRole(String nombre) {
+		return perfilDao.getPerfilesByRole(nombre);
+	}
+
+
+	@Override
+	public List<Usuario> getUsuariosByRole(String role) {
+		
+		return usuarioDao.findUserByRole(role);
 	}
 }

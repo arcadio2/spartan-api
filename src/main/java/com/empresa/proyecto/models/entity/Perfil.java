@@ -14,6 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,18 +33,26 @@ public class Perfil implements Serializable{
 	private static final long serialVersionUID = 1L;
 	  
 	@OneToOne 
+	@NotNull(message = "Requieres de un usuario para guardar tu perfil")
 	private Usuario usuario; 
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull(message = "Ingrese un sexo") 
 	private Sexo sexo; 
 	
 	private String foto;
 	 
+	@Min(value = 14,message = "No puedes ingresar una edad tan baja")
+	@Max(value = 90, message = "No puede ingresar una edad tan alta")
 	private Integer edad; 
 	
+	@DecimalMin(value = "30",message = "No puedes ingresar un peso tan bajo")
+	@DecimalMax(value = "200",message = "No puedes ingresar un peso tan alto")
 	private Double peso; 
 	
+	@DecimalMin(value = "1.4",message = "No puedes ingresar una estatura tan baja en metros")
+	@DecimalMax(value = "2.1",message = "No puedes ingresar una estatura tan alta en metros")
 	private Double altura;
 
 	@ManyToOne
@@ -50,7 +63,7 @@ public class Perfil implements Serializable{
 	@JoinColumn(name = "perfil_id")
 	private List<Rutina> rutinas; 
 	
-	 	
+	private String instructor;
 	 
 	public Long getId() {
 		return id;
@@ -114,7 +127,24 @@ public class Perfil implements Serializable{
 
 	public void setSubscripcion(Subscripcion subscripcion) {
 		this.subscripcion = subscripcion;
+	}
+
+	public List<Rutina> getRutinas() {
+		return rutinas;
+	}
+
+	public void setRutinas(List<Rutina> rutinas) {
+		this.rutinas = rutinas;
+	}
+
+	public String getInstructor() {
+		return instructor;
+	}
+
+	public void setInstructor(String instructor) {
+		this.instructor = instructor;
 	} 
+	
 	
 	
 	

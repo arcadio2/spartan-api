@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "rutinas")
 public class Rutina implements Serializable{
@@ -30,9 +32,9 @@ public class Rutina implements Serializable{
 	private Long id;
 	
 	 
-	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	private DiasSemana dia;  
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	private DiasSemana dia;   
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name = "rutina_ejercicios", 

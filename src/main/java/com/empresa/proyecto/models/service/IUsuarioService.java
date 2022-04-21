@@ -12,9 +12,13 @@ public interface IUsuarioService {
 	public Usuario findByUsername(String username);
 	public Usuario save(Usuario usuario); 
 	
+	public List<Usuario> getAllUsers();
+	
 	public List<Role> getRoles();
 	
 	public Role getRoleByName(String name); 
+	
+	public void deleteUser(Usuario usuario); 
 	
 	public boolean existeUsuarioByUsername(String username);
 	
@@ -23,6 +27,7 @@ public interface IUsuarioService {
 	public Perfil getProfileByUsername(String username);
 	public Perfil getProfileById(Long id);
 	public Perfil saveProfile(Perfil perfil); 
+	public void deleteProfile(Perfil perfil); 
 	
 	public Sexo getSexoById(Long id); 
 	
@@ -30,4 +35,9 @@ public interface IUsuarioService {
 	
 	public Subscripcion saveSubscripcion(Subscripcion sub);
 	
+	public List<Usuario> getUsuariosByRole(String role); 
+	public List<Perfil> getPerfilesByInstructor(String instructor); 
+	public List<Perfil> getAllProfiles(); 
+	
+	public List<Perfil> getPerfilByRole(String nombre); 
 }

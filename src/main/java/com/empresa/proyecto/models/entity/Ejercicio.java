@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -19,9 +20,9 @@ public class Ejercicio implements Serializable {
 	
 	private String nombre; 
 	 
-	private String musculo; 
 	
-	
+	@ManyToOne
+	private Musculo musculo; 
 	
 	
 	public Long getId() {
@@ -52,14 +53,14 @@ public class Ejercicio implements Serializable {
 
 
 
-	public String getMusculo() {
+	public Musculo getMusculo() {
 		return musculo;
 	}
 
 
 
 
-	public void setMusculo(String musculo) {
+	public void setMusculo(Musculo musculo) {
 		this.musculo = musculo;
 	}
 

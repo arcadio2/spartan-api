@@ -14,6 +14,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.service.IUsuarioService;
 
 
@@ -22,7 +23,7 @@ import com.empresa.proyecto.models.service.IUsuarioService;
 public class FileService implements IFileService{
 	private final static String DIR_UPLOAD="uploads"; 
 	@Autowired
-	private IUsuarioService clienteService;
+	private IUsuarioService usuarioService;
 	
 
 
@@ -38,8 +39,8 @@ public class FileService implements IFileService{
 
 	@Override
 	public boolean deleteImage(Long id) {
-		/*Cliente cliente = clienteService.findOne(id); 
-		String nombreFotoAnterior = cliente.getFoto();
+		Perfil perfil = usuarioService.getProfileById(id); 
+		String nombreFotoAnterior = perfil.getFoto();
 		if(nombreFotoAnterior !=null && nombreFotoAnterior.length()>0)  {
 			Path rutaAnterior = this.getPath(nombreFotoAnterior);
 			File archivoAnterior = rutaAnterior.toFile();
@@ -47,7 +48,7 @@ public class FileService implements IFileService{
 				archivoAnterior.delete();
 				return true;
 			}
-		}*/
+		}
 		return false; 
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.proyecto.models.entity.Ejercicio;
+import com.empresa.proyecto.models.entity.Musculo;
 import com.empresa.proyecto.models.service.EjercicioService;
 
 @RestController
@@ -30,5 +31,22 @@ public class EjerciciosController {
 	public List<Ejercicio> getEjercicios2(@PathVariable String nombre){
 		return ejercicioService.findByNombre(nombre); 
 	}
+	
+	@GetMapping("/{nombre}/{id}")
+	public List<Ejercicio> getEjercicios3(@PathVariable String nombre, @PathVariable List<Long> id){
+		return ejercicioService.findByNombreAndMusculo(nombre,id); 
+	}
+	
+	@GetMapping("/emusculo/{id}")
+	public List<Ejercicio> getEjercicios4( @PathVariable List<Long> id){
+		return ejercicioService.findByMusculo(id); 
+	}
 
+	@GetMapping("/musculos") 
+	public List<Musculo> getMusculos(){
+		return ejercicioService.findAllMusculos();  
+	}
+	
+	
+	
 }
