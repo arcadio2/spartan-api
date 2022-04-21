@@ -25,8 +25,6 @@ public class Rutina implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -37,14 +35,14 @@ public class Rutina implements Serializable{
 	private DiasSemana dia;   
 	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinTable(name = "rutina_ejercicios", 
+	@JoinTable(name = "rutina_series", 
 		joinColumns = @JoinColumn(name="rutina_id"),	
-		uniqueConstraints =  {@UniqueConstraint(columnNames = {"rutina_id","ejercicio_id"})} , 
-		inverseJoinColumns = @JoinColumn(name="ejercicio_id"))
-	private List<Ejercicio> ejercicios;
+		uniqueConstraints =  {@UniqueConstraint(columnNames = {"rutina_id","serie_id"})} , 
+		inverseJoinColumns = @JoinColumn(name="serie_id"))
+	private List<Serie> series;
 
 	public Long getId() {
-		return id;
+		return id; 
 	}
 
 	public void setId(Long id) {
@@ -57,15 +55,17 @@ public class Rutina implements Serializable{
 
 	public void setDia(DiasSemana dia) {
 		this.dia = dia;
-	}
-
-	public List<Ejercicio> getEjercicios() {
-		return ejercicios;
-	}
-
-	public void setEjercicios(List<Ejercicio> ejercicios) {
-		this.ejercicios = ejercicios;
 	} 
+
+	public List<Serie> getSeries() {
+		return series;
+	} 
+
+	public void setSeries(List<Serie> series) {
+		this.series = series;
+	}
+
+	
 	
 	
 }

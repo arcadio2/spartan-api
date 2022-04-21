@@ -5,7 +5,7 @@ INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('
 INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('jesus','$2a$10$P7NdGgsEiWdPoCYs7dbOYO62kv9ey6dfddQxue6/E8yPItmGkZQWO',1,'Luis','Lopez','luis@gmail.com');
 INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('luis','$2a$10$MPD0VH9TkPNjoZk.nRXgU.4n7UguXIrXrEuYQ8lohs8xXJsDf6LCi',1,'Galilea','Lopez','gali@gmail.com');
 INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('lalo','$2a$10$MPD0VH9TkPNjoZk.nRXgU.4n7UguXIrXrEuYQ8lohs8xXJsDf6LCi',1,'Eduardo','Torres','eduardo@gmail.com');
-
+INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('fede','$2a$10$MPD0VH9TkPNjoZk.nRXgU.4n7UguXIrXrEuYQ8lohs8xXJsDf6LCi',1,'Federico','López','fede@gmail.com');
 
 
 INSERT INTO roles (nombre) values ('ROLE_USER');
@@ -19,6 +19,7 @@ insert into usuario_roles (usuario_id,role_id) values (2,2);
 insert into usuario_roles (usuario_id,role_id) values (2,1);  
 insert into usuario_roles (usuario_id,role_id) values (3,1);  
 insert into usuario_roles (usuario_id,role_id) values (5,3);  
+insert into usuario_roles (usuario_ide,role_id) values (6,1); 
 
 insert into sexo(sexo) values ('hombre'); 
 insert into sexo(sexo) values ('mujer');
@@ -29,8 +30,10 @@ insert into c_subscripcion(tipo_subscripcion,precio,dias) values ('semanal',100,
 
 insert into subscripcion(active,tipo_id,fecha_subscripcion,fecha_fin) values (true,1,'22-08-20','22-08-26'); 
 
-insert into perfil(sexo_id,usuario_id,foto,edad,peso,altura,subscripcion_id,instructor) values (1,1,'luffy.jpg',21,57.0,1.75,1,'lalo'); 
 
+insert into perfil(sexo_id,usuario_id,foto,edad,peso,altura,subscripcion_id,instructor) values (1,1,'luffy.jpg',21,57.0,1.75,1,'lalo'); 
+insert into perfil(sexo_id,usuario_id,foto,edad,peso,altura) values (1,5,'',27,87.0,1.79); 
+insert into perfil(sexo_id,usuario_id,foto,edad,peso,altura,subscripcion_id,instructor) values (1,6,'',22,68.0,1.86,1,'lalo');
 
 insert into c_dias(dia) values ("lunes"); 
 insert into c_dias(dia) values ("martes"); 
@@ -61,9 +64,14 @@ insert into ejercicios(nombre,musculo_id) values ("Mancuerna",2);
 insert into ejercicios(nombre,musculo_id) values ("Peso muerto",3); 
 insert into ejercicios(nombre,musculo_id) values ("Sentadilla",3); 
 
-insert into rutina_ejercicios(rutina_id, ejercicio_id) values (1,1); 
-insert into rutina_ejercicios(rutina_id, ejercicio_id) values (1,2); 
+insert into series(repeticiones,series,ejercicio_id) values(12,3,1);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,2);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,3);
 
+
+insert into rutina_series(rutina_id, serie_id) values (1,1); 
+insert into rutina_series(rutina_id, serie_id) values (1,2); 
+insert into rutina_series(rutina_id, serie_id) values (1,3); 
 
 
 insert into ejercicios(nombre,musculo_id) values ("partera abierta",3); 
@@ -274,6 +282,27 @@ insert into ejercicios(nombre,musculo_id) values ("apertura con cuerda",11);
 insert into ejercicios(nombre,musculo_id) values ("apertura con movimiento",11); 
 insert into ejercicios(nombre,musculo_id) values ("remo de pie con barra",11); 
 insert into ejercicios(nombre,musculo_id) values ("encogimiento polea baja con barra",11); 
+
+
+insert into series(repeticiones,series,ejercicio_id) values(12,3,4);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,5);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,6);
+
+insert into rutina_series(rutina_id, serie_id) values (2,4);
+insert into rutina_series(rutina_id, serie_id) values (2,5);
+insert into rutina_series(rutina_id, serie_id) values (2,6);
+
+
+insert into series(repeticiones,series,ejercicio_id) values(12,3,7);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,8);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,9);
+insert into series(repeticiones,series,ejercicio_id) values(12,3,10);
+
+insert into rutina_series(rutina_id, serie_id) values (3,7);
+insert into rutina_series(rutina_id, serie_id) values (3,8);
+insert into rutina_series(rutina_id, serie_id) values (3,9);
+insert into rutina_series(rutina_id, serie_id) values (3,10);
+ 
 
 
 

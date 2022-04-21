@@ -178,11 +178,7 @@ public class UsuarioController {
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-				
-			
-		 
-		
-		
+
 		if(perfilActual == null) {
 			response.put("error", "No existe el perfil a editar");
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.NOT_FOUND); 
@@ -432,13 +428,13 @@ public class UsuarioController {
 	@Secured({"ROLE_ADMIN","ROLE_INSTRUCTOR","ROLE_USER"})
 	public List<Usuario> getUsersByRole(@PathVariable String nombre){
 		return usuarioService.getUsuariosByRole(nombre);
-	}
+	} 
 	
 	@GetMapping("/users/perfiles")
 	@Secured({"ROLE_ADMIN","ROLE_INSTRUCTOR","ROLE_USER"})
 	public List<Perfil> getAllProfiles(){
 		return usuarioService.getAllProfiles();
-	}
+	} 
 	
 	@GetMapping("/users/perfiles/{nombre}")
 	@Secured({"ROLE_ADMIN","ROLE_INSTRUCTOR","ROLE_USER"})
